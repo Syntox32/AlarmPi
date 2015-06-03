@@ -1,0 +1,38 @@
+{
+    "alarm1": {
+        "label": "Your fav show is about to start shitlord",
+        "hour": 21,
+        "minute": 30,
+        "days": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "options": []
+    },
+    "alarm2": {
+        "label": "wake up you shit",
+        "hour": 7,
+        "minute": 0,
+        "days": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "options": []
+    },
+    "alarm3": {
+        "label": "don't waste your weekend",
+        "hour": 10,
+        "minute": 0,
+        "days": [
+            6,
+            7
+        ],
+        "options": []
+    }
+}

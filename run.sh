@@ -1,0 +1,1 @@
+nohup python alarm.py &
