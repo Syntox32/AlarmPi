@@ -10,10 +10,11 @@ def convert_mp3(filename, output_name):
 	"""
 
 	"""
-	if os.path.isfile("ffmpeg.exe"):
-		ffmpeg = "ffmpeg.exe" # windows
-	else:
-		ffmpeg = "ffmpeg" # linux
+
+	#if os.path.isfile("ffmpeg.exe"):
+	#	ffmpeg = "ffmpeg.exe" # windows
+	#else:
+	ffmpeg = "ffmpeg" # linux
 
 	path = os.path.abspath(filename)
 	out = os.path.abspath(output_name)
