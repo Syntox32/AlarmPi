@@ -77,16 +77,11 @@ class QueryHandler(object):
 			ret = self._get_query(name, q)
 
 			if ret:
-				wav = template % (i, "wav")
-				if not convert_mp3(name, wav):
-					logger.warning("failed to convert query: %s" % wav)
-					continue
-
-				path = os.path.abspath(wav)
-				sounds.append(path)
+				wav = convert_mp3(name, True)
+				sounds.append(wav)
 
 				logger.info("queued up sound: %s" % wav)
-				logger.debug(path)
+				logger.debug(wav)
 			else:
 				logger.warning("failed to retreieve query: %s" % wav)
 

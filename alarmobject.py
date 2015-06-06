@@ -68,11 +68,15 @@ class Alarm(object):
 
 		also do some smart things with the converting
 		"""
-		p = os.path.abspath("music/uptown-funk.mp3")
-		p2 = os.path.abspath("music/uptown-funk.wav")
+		#p = os.path.abspath("music/uptown-funk.mp3")
+		#p2 = os.path.abspath("music/uptown-funk.wav")
+		p = os.path.abspath("music/higher-love.mp3")
+		# p2 = os.path.abspath("music/higher-love.wav")
 		
-		if not os.path.isfile(p2):
-			convert_mp3(p, p2)
+		p2 = convert_mp3(p)
+
+		#if not os.path.isfile(p2):
+			#convert_mp3(p, p2)
 		
 		return p2
 
@@ -85,14 +89,14 @@ class Alarm(object):
 
 		# temp
 		# weather goes here
-		q = [ "This is the first test",
-			"It's going to be good",
-			"Good morning Syntox, it's time to kick ass." ]
+		q = [ "Fuck you faggot, have a nice day.",
+			"Today has a 97 percent chance of raining.",
+			"Good morning." ]
 
 		self.qh.load(q)
 
 		self.query_delay = 1
-		self.query_start_delay = 2
+		self.query_start_delay = 4
 		self.query_db_sink = 10
 		self.query_duration = self._get_query_duration(self.qh.sound_list)
 
@@ -137,7 +141,7 @@ class Alarm(object):
 			end=int(start_s + fade_s))
 
 		seg2 = seg1.fade(
-			to_gain=gain + 5.0,
+			to_gain=gain + 2.5,
 			start=int(end_s - fade_s),
 			end=int(end_s))
 
