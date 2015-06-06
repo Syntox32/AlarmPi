@@ -38,6 +38,6 @@ def get_date():
 
 def get_time():
 	"""
-	Get the current time
+	Get the current time 
 	"""
 	return datetime.datetime.time(get_date())

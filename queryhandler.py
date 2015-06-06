@@ -9,17 +9,19 @@ logger = logging.getLogger()
 
 class QueryHandler(object):
 	"""
-
+	QueryHandler object for handling downloading, conversion
+	and plyaing of queries.
 	"""
 	def __init__(self):
 		"""
-
+		Initializes a QueryHandler object
 		"""
 		self.loaded = False
 
 	def load(self, q_list):
 		"""
-
+		Takes a given list of queries in a string format
+		and converts them into wav files which can be played later.
 		"""
 		logger.debug("loaded query handler")
 
@@ -28,7 +30,7 @@ class QueryHandler(object):
 
 	def play(self, delay=0):
 		"""
-
+		Plays a prepared list of queries.
 		"""
 		logger.info("playing query list...")
 
@@ -42,13 +44,14 @@ class QueryHandler(object):
 
 	def _query(self, text):
 		"""
-
+		Escape a given string for use as an URL.
 		"""
 		return urllib2.quote(text)
 
 	def _play_queries(self, delay, sounds):
 		"""
-
+		Itterates over a given list of queries and plays them
+		with a given delay after each one.
 		"""
 		logger.debug("playing query queue...")
 
@@ -67,7 +70,8 @@ class QueryHandler(object):
 
 	def _queue_queries(self, queries):
 		"""
-
+		Retrieves and converts a list of queries 
+		and returns a list of the paths to the converted .wav files.
 		"""
 		sounds = []
 		
@@ -89,7 +93,8 @@ class QueryHandler(object):
 
 	def _get_query(self, save_name, text):
 		"""
-
+		Takes a given string and converts it into a .mp3 file,
+		which can later be converted.
 		"""
 		try:
 			li = text.split(" ")
@@ -134,7 +139,8 @@ class QueryHandler(object):
 
 	def _request_query(self, text, index):
 		"""
-
+		Requests a query to the google translate API and 
+		returns the .mp3 data. 
 		"""
 		try:
 			q = self._query(text)

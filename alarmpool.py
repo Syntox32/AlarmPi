@@ -11,16 +11,15 @@ logger = logging.getLogger()
 
 class AlarmPool(object):
 	"""
-
+	Class for handling all the alarm object.
 	"""
 	def __init__(self):
 		"""
-
+		Initialize an instance of an AlarmPool
 		"""
 		self.alarm_file = "alarms.json"
-		self.log_file = "log.txt"
+		self.log_file = "alarm.log"
 		self.next_pending = None
-		self.running = True
 		self.pool = []
 		self.pre_wake_time = 30 # seconds
 
@@ -56,7 +55,7 @@ class AlarmPool(object):
 
 	def select_next_pending(self):
 		"""
-
+		Select and set the next pending alarm.
 		"""
 		if not (len(self.pool) > 0):
 			logger.warning("found no alarms... exiting")
@@ -75,7 +74,7 @@ class AlarmPool(object):
 
 	def run(self):
 		"""
-
+		Start the main loop.
 		"""
 		self.select_next_pending()
 		delta_t = self.next_pending.time_pending() - get_date()
@@ -99,13 +98,16 @@ class AlarmPool(object):
 
 	def _alarm_from_name(self, name):
 		"""
-
+		Private function to get an alarm by it's name.
 		"""
 		for a in self.pool:
 			if a.name == name:
 				return a
 
 	def debug(self):
+		"""
+		Woo debugging
+		"""
 		logger.debug("alarm went off because of debuggingggg")
 		self.select_next_pending()
 		self.next_pending.prepare()

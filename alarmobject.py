@@ -13,11 +13,12 @@ logger = logging.getLogger()
 
 class Alarm(object):
 	"""
-	Alarm object to hold all the things
+	An Alarm object holds an instance for a single alarm,
+	this class is used to prepare, load and set-off an alarm.
 	"""
 	def __init__(self, name, label, hour, minute, days, options):
 		"""
-
+		Initializes an Alarm object using a given time and option.
 		"""
 		self.name = name
 		self.label = label
@@ -29,13 +30,13 @@ class Alarm(object):
 
 	def delta(self):
 		"""
-
+		Returns the Alarm time as a timedelta object.
 		"""
 		return datetime.timedelta(hours=self.hour, minutes=self.minute)
 
 	def time_pending(self):
 		"""
-
+		Returns the date and time for the next time the alarm is set to go off.
 		"""
 		now = datetime.datetime.now()
 		within_the_hour = self.hour == now.hour and now.minute >= self.minute
@@ -82,7 +83,9 @@ class Alarm(object):
 
 	def prepare(self):
 		"""
-
+		Prepares an alarm before it is set off.
+		Queries and music is downloaded, converted and prepared, this usually
+		takes around 15 to 30 seconds.
 		"""
 		self.mp = Player()
 		self.qh = QueryHandler()
@@ -110,7 +113,7 @@ class Alarm(object):
 
 	def set_off(self):
 		"""
-
+		Set's off the alarm.
 		"""
 		if not self.prepared:
 			logger.warning("alarm is not prepared... default fallback...")
@@ -126,7 +129,8 @@ class Alarm(object):
 
 	def _prepare_segment_fade(self, wav_path):
 		"""
-
+		Prepares music by fading/damping a portion of it so you can better
+		hear the queries as they are played asynchronously.
 		"""
 		seg = AudioSegment.from_file(wav_path, format="wav")
 
@@ -151,7 +155,7 @@ class Alarm(object):
 
 	def _get_query_duration(self, q_list):
 		"""
-
+		Returns the length of a query list.
 		"""
 		duration = 0
 
@@ -164,7 +168,7 @@ class Alarm(object):
 	@staticmethod
 	def set_volume(percent):
 		"""
-
+		Set's the volume of system, duuh.
 		"""
 		mixer = aa.Mixer(control='PCM')
 		mixer.setvolume(percent)

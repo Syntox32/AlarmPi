@@ -14,14 +14,15 @@ class Player(object):
 	"""
 	def __init__(self, path=None):
 		"""
+		Initialize a player object, either with or without a path.
 
+		If it is not initalized with a path you have to use the load function
+		to manually load object with a file. 
 		"""
 		logger.debug("initalizing player with sound: %s" % path)
 
-		# do some more error checking
-		# like if the player tries to play without a
-		# song initalized
-
+		# with concurrent streams you will experience
+		# stuttering if the periodsize is too big
 		self._periodsize = 1024 # 8192
 		
 		if path != None:
@@ -29,7 +30,11 @@ class Player(object):
 
 	def load(self, path):
 		"""
+		Loads a uncompressed music file into the object.
 
+		This can be called as many times as you would like
+		during the lifetime of the object, as long as the previous
+		file has finished playing.
 		"""
 		logger.debug("loading player with sound: %s" % path)
 
@@ -48,7 +53,12 @@ class Player(object):
 
 	def play(self, end_delay=0, join=True):
 		"""
+		Play a loaded file.
 
+		'end_delay' is the number of seconds to wait before actually finishing playing.
+		
+		If 'join' is true the main thread will wait for this one to
+		finish before moving along.
 		"""
 		logger.debug("starting player thread")
 
@@ -63,7 +73,7 @@ class Player(object):
 
 	def _run(self):
 		"""
-
+		Private function that plays the loaded uncompressed file.
 		"""
 		while self._data != '' and self.playing:
 			self._player.write(self._data)

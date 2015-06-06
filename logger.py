@@ -1,7 +1,12 @@
 import os
 import logging
 
-# setup all the logger stuff
+"""
+Initalize a logger object.
+
+TODO: turn the log filename into an arg option 
+"""
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
