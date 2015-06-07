@@ -2,12 +2,10 @@ import os
 import sys
 import json
 import time
-import logging
 
-from alarmobject import Alarm
-from utils import *
-
-logger = logging.getLogger()
+from alarm.alarmobject import Alarm
+from alarm.logger import logger
+from alarm.utils import *
 
 class AlarmPool(object):
 	"""

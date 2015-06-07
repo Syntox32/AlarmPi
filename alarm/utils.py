@@ -2,12 +2,10 @@ import os
 import time
 import datetime
 import subprocess
-import logging
 
 from os.path import *
 from pydub import AudioSegment
-
-logger = logging.getLogger()
+from alarm.logger import logger
 
 def convert_mp3(filename, overwrite=False):
 	"""

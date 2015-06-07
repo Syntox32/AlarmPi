@@ -1,15 +1,15 @@
 import os
 import time
 import datetime
-import logging
 
 import alsaaudio as aa
 from pydub import AudioSegment
-from queryhandler import QueryHandler
-from player import Player
-from utils import *
 
-logger = logging.getLogger()
+from alarm.queryhandler import QueryHandler
+from alarm.player import Player
+from alarm.soundloader import Soundloader
+from alarm.logger import logger
+from alarm.utils import *
 
 class Alarm(object):
 	"""
@@ -27,6 +27,13 @@ class Alarm(object):
 		self.days = days
 		self.options = options
 		self.prepared = False
+
+		# Soundcloud instance
+		self.sc = None
+
+		# default fallback incase we can't fetch
+		# the song from soundcloud
+		self.default_fallback = os.path.abspath("music/sandstorm.wav")
 
 	def delta(self):
 		"""
@@ -59,6 +66,7 @@ class Alarm(object):
 				self.hour,
 				self.minute,
 				0, 0, d.tzinfo)
+			
 		return date
 
 	def get_song(self):
@@ -74,12 +82,12 @@ class Alarm(object):
 		p = os.path.abspath("music/higher-love.mp3")
 		# p2 = os.path.abspath("music/higher-love.wav")
 		
-		p2 = convert_mp3(p)
-
-		#if not os.path.isfile(p2):
-			#convert_mp3(p, p2)
 		
-		return p2
+
+		# returns the song path even if the file exists
+		song_path = convert_mp3(p)
+		
+		return song_path
 
 	def prepare(self):
 		"""
@@ -89,6 +97,7 @@ class Alarm(object):
 		"""
 		self.mp = Player()
 		self.qh = QueryHandler()
+		self.sc = Soundloader()
 
 		# temp
 		# weather goes here

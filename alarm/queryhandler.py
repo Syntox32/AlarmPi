@@ -1,11 +1,9 @@
 import os
 import urllib2
-import logging
 
-from player import Player
-from utils import convert_mp3
-
-logger = logging.getLogger()
+from alarm.player import Player
+from alarm.logger import logger
+from alarm.utils import convert_mp3
 
 class QueryHandler(object):
 	"""

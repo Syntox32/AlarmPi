@@ -2,11 +2,9 @@ import os
 import wave
 import time
 import threading
-import logging
 
 import alsaaudio as aa
-
-logger = logging.getLogger()
+from alarm.logger import logger
 
 class Player(object):
 	"""
