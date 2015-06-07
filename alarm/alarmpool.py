@@ -4,38 +4,45 @@ import json
 import time
 
 from alarm.alarmobject import Alarm
-from alarm.logger import logger
+from alarm.logger import logger, set_log_path
 from alarm.utils import *
 
 class AlarmPool(object):
 	"""
 	Class for handling all the alarm object.
 	"""
-	def __init__(self):
+	def __init__(self, config_path):
 		"""
 		Initialize an instance of an AlarmPool
 		"""
-		self.alarm_file = "alarms.json"
-		self.log_file = "alarm.log"
+
+		config = self._get_json(config_path)
+		set_log_path(config["log_file"])
+
+		self.alarm_file = os.path.abspath(config["alarm_file"]) # "alarms.json"
+		self.log_file = os.path.abspath(config["log_file"]) # "alarm.log"
 		self.next_pending = None
 		self.pool = []
 		self.pre_wake_time = 30 # seconds
+
+	def _get_json(self, path):
+		path = os.path.abspath(path)
+		with open(path, "r") as f:
+			json_data = f.read()
+
+		return json.loads(json_data)
 
 	def load(self):
 		"""
 		Loads the alarms, duuh
 		"""
 		if os.path.isfile(os.path.abspath(self.alarm_file)):
-			logger.debug("alarms.json found...")
+			logger.debug("alarms found @ %s" % self.alarm_file)
 		else:
-			logger.critical("could not find alarms.json... exiting")
+			logger.critical("could not find %s \n... exiting" % self.alarm_file)
 			sys.exit(1)
 
-		path = os.path.abspath(self.alarm_file)
-		with open(path, "r") as f:
-			json_data = f.read()
-
-		alarm_json = json.loads(json_data)
+		alarm_json = self._get_json(self.alarm_file)
 		al = []
 
 		for k in alarm_json:
