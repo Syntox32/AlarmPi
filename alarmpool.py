@@ -95,6 +95,9 @@ class AlarmPool(object):
 
 		logger.info("pling pling pling")
 		self.next_pending.set_off()
+		
+		logger.info("starting over..")
+		self.run()
 
 	def _alarm_from_name(self, name):
 		"""
