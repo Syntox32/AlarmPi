@@ -24,9 +24,15 @@ class Alarm(object):
 		self.label = label
 		self.hour = hour
 		self.minute = minute
-		self.days = days
 		self.options = options
 		self.prepared = False
+
+		if len(days) < 1:
+			logger.warning("alarm (%s) does not have any days assigned..." % name)
+			logger.warning("alarm (%s) will be assigned to all days by default." % name)
+			self.days = range(1, 8)
+		else:
+			self.days = days
 
 		# Soundcloud instance
 		self.sc = None
@@ -46,28 +52,90 @@ class Alarm(object):
 		Returns the date and time for the next time the alarm is set to go off.
 		"""
 		now = datetime.datetime.now()
-		within_the_hour = self.hour == now.hour and now.minute >= self.minute
-		yet_to_happend = self.hour >= now.hour
+		now_delta = self._now_delta()
+		wday = self._current_weekday()
 
-		if yet_to_happend or within_the_hour:
-			# today
-			date = datetime.datetime(now.year,
-				now.month,
-				now.day,
+		if now_delta > now and wday in self.days:
+			# it's a valid weekday and it's going to happend today
+			#logger.debug("this is a valid weekday %i %s" % (wday, now))
+			#logger.debug("next date: %s" % str(now_delta))
+			return now_delta
+		elif now_delta < now or wday not in self.days:
+			# we cant have this happend today,
+			# because it's over the time or it's not a valid weekday,
+			# so we just have to find another weekday that is valid
+
+			if len(self.days) > 1:
+				# as long as the list has a length of
+				# over two, we can always remove the current weekday if it is
+				# in the list, because there is always another date which can
+				# be chosen
+				days = list(self.days)
+				contains_today = wday in self.days
+
+				if contains_today:
+					# get's the next valid day in the list
+					day = days[(days.index(wday) + 1) % len(days)]
+				else:
+					# finds the first valid day
+					n = (wday - 1)
+					while (n + 1) not in self.days:
+						# modulo does not like values starting at 1, like values
+						# from isoweekday(), so we need to offset by 1
+						n = (n + 1) % 7
+					day = (n + 1)
+			else:
+				# there is only one entry..
+				day = self.days[0]
+
+			date = self._next_date_on_weekday(day)
+			#logger.debug("next valid weekday is: %i" % wday)
+
+			next_date = datetime.datetime(
+				date.year,
+				date.month,
+				date.day,
 				self.hour,
 				self.minute,
-				0, 0, now.tzinfo)
-		else:
-			# tomorrow
-			d = now + datetime.timedelta(days=1)
-			date = datetime.datetime(d.year,
-				d.month,
-				d.day,
-				self.hour,
-				self.minute,
-				0, 0, d.tzinfo)
-			
+				0, 0, date.tzinfo)
+			#logger.debug("next date: %s" % str(next_date))
+			return next_date
+
+	def _next_date_on_weekday(self, iso_day):
+		"""
+		Returns the next date that is equel to the given iso weekday.
+
+		See _current_weekday()
+		"""
+		date = datetime.datetime.now()
+		delta_day = datetime.timedelta(days=1)
+
+		while (date + delta_day).isoweekday() != iso_day:
+			date += delta_day
+		date += delta_day
+
 		return date
+	
+	def _now_delta(self):
+		"""
+		now_delta is a terrible name come to think of it
+		"""
+		now = datetime.datetime.now()
+		date = datetime.datetime(
+			now.year, 
+			now.month, 
+			now.day, 
+			self.hour,
+			self.minute,
+			0, 0, now.tzinfo)
+		return date
+
+	def _current_weekday(self):
+		"""
+		Returns what iso weekday today is
+		e.g.: 1 is monday 7 is sunday
+		"""
+		return datetime.datetime.now().isoweekday()
 
 	def get_song(self):
 		"""

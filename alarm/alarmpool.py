@@ -69,8 +69,11 @@ class AlarmPool(object):
 		date = get_date()
 		lowest = self.pool[0]
 
+		for a in self.pool: 
+			logger.debug("] %s" % str(a.time_pending()))
+
 		for alarm in self.pool:
-			if alarm.time_pending() < lowest.time_pending() and alarm.time_pending() > date:
+			if alarm.time_pending() < lowest.time_pending():
 				lowest = alarm
 
 		logger.info("next pending alarm (%s) @%s" % (lowest.name, str(lowest.time_pending())))
