@@ -1,2 +1,2 @@
-pyalsaaudio==0.5
-pydub==0.11.0
+pyalsaaudio>=0.5
+pydub>=0.11.0
