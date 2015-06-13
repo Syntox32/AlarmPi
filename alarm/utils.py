@@ -24,7 +24,7 @@ def convert_mp3(filename, overwrite=False):
 		AudioSegment.from_file(in_path).export(out_path, format="wav")
 		logger.debug("conversion completed successfully...")
 	else:
-		logger.debug("file already exist.. skipping convertion..")
+		logger.debug("file already exist.. skipping conversion..")
 
 	return out_path
 
