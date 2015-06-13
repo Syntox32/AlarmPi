@@ -34,5 +34,22 @@
             7
         ],
         "options": []
+    },
+    "alarm4": {
+        "label": "don't waste your weekend",
+        "hour": 10,
+        "minute": 30,
+        "days": [
+            2, 4
+        ],
+        "options": []
+    },
+    "alarm5": {
+        "label": "don't waste your weekend",
+        "hour": 14,
+        "minute": 15,
+        "days": [
+        ],
+        "options": []
     }
 }
