@@ -110,7 +110,7 @@ class Soundloader(object):
 		track_id = data["id"]
 		fname = self._get_trackname(data)
 		self._download_id(track_id, fname)
-		return True
+		return self.get_filename(fname)
 
 	def download_set(self, set_url, count=0):
 		"""
@@ -241,6 +241,13 @@ class Soundloader(object):
 				f.write(data)
 		except IOError as e:
 			print("IOError:", e)
+		return None
+
+	def get_filename(self, filename):
+		if self.save_folder:
+				return os.path.join(self.save_folder, filename)
+
+		return filename
 
 	def _safe_filename(self, path):
 		"""
