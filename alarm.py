@@ -8,10 +8,12 @@ def main():
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--debug", action="store_true")
+	parser.add_argument("-c", "--config")
 	args = parser.parse_args()
 
 	try:
-		pool = AlarmPool("alarm.config")
+		config = os.path.abspath(args.config)
+		pool = AlarmPool(config)
 		
 		logger.info("script starting up @ %s" % str(get_date()))
 		Alarm.set_volume(90) # should be between 100 and 85

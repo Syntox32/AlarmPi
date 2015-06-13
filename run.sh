@@ -1,1 +1,1 @@
-nohup python alarm.py &
+nohup python alarm.py --config alarm.config &
