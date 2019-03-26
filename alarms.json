@@ -1,6 +1,6 @@
 {
     "alarm1": {
-        "label": "Your fav show is about to start shitlord",
+        "label": "Your fav show is about to start",
         "hour": 21,
         "minute": 30,
         "days": [
@@ -13,7 +13,7 @@
         "options": []
     },
     "alarm2": {
-        "label": "wake up you shit",
+        "label": "wake up",
         "hour": 7,
         "minute": 0,
         "days": [
@@ -26,7 +26,7 @@
         "options": []
     },
     "alarm3": {
-        "label": "don't waste your weekend",
+        "label": "get up",
         "hour": 10,
         "minute": 0,
         "days": [
@@ -36,7 +36,7 @@
         "options": []
     },
     "alarm4": {
-        "label": "don't waste your weekend",
+        "label": "get up please",
         "hour": 10,
         "minute": 30,
         "days": [
@@ -45,7 +45,7 @@
         "options": []
     },
     "alarm5": {
-        "label": "don't waste your weekend",
+        "label": "I said please",
         "hour": 14,
         "minute": 15,
         "days": [
